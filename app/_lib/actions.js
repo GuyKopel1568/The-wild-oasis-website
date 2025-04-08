@@ -1,6 +1,7 @@
 'use server';
 import { supabase } from './supabase';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { auth } from './auth';
 
@@ -21,9 +22,9 @@ export async function updateGuest(formData) {
   const [nationality, countryFlag] = formData.get('nationality').split('%');
 
   if (!/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
-    throw new Error('Please provida a valid national ID number');
+    throw new Error('Please e a valid national ID number');
 
-  const updatData = {
+  const updateData = {
     nationality,
     countryFlag,
     nationalID,
@@ -31,10 +32,12 @@ export async function updateGuest(formData) {
 
   const { data, error } = await supabase
     .from('guests')
-    .update(updatData)
+    .update(updateData)
     .eq('id', session.user.guestId);
 
   if (error) {
     throw new Error('Guest could not be updated');
   }
+
+  revalidatePath('/account/profile');
 }
