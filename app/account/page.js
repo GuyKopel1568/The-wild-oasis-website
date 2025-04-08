@@ -6,8 +6,9 @@ export const metadata = {
 
 export default async function Page() {
   const session = await auth();
+  // console.log(session);
   return (
-    <h2 className="font-semibold text-2xl text-accent-400 mb-7 flex items-center gap-4">
+    <h2 className="font-semibold text-2xl text-accent-400 mb-7 flex i tems-center gap-4">
       <span>Welcome {session.user.name}</span>
       <img
         src={session.user.image}
