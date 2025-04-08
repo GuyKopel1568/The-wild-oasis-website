@@ -25,4 +25,9 @@ export async function auth() {
 // NextAuth returns a handler function for App Router
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export {
+  handler as GET,
+  handler as POST,
+  handler as signIn,
+  handler as signOut,
+};
