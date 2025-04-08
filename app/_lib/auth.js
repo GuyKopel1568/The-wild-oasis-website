@@ -1,6 +1,5 @@
-import NextAuth from 'next-auth';
+import NextAuth, { getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { getServerSession } from 'next-auth';
 
 const authOptions = {
   providers: [
@@ -9,6 +8,14 @@ const authOptions = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
+  callbacks: {
+    authorized({ auth, request }) {
+      return !!auth?.user;
+    },
+  },
+  pages: {
+    signIn: '/login',
+  },
 };
 
 export async function auth() {
