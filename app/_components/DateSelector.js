@@ -24,12 +24,10 @@ function isAlreadyBooked(range, datesArr) {
 function DateSelector({ settings, cabin, bookedDates }) {
   const { range, setRange, resetRange } = useReservation();
 
-  // Funzione per gestire la selezione della data
   const handleSelect = (selectedRange) => {
-    if (!selectedRange) return; // Evita di aggiornare se `selectedRange` è undefined
+    if (!selectedRange) return;
 
     setRange((prevRange) => {
-      // Verifica se si tratta di un doppio clic sulla stessa data e mantieni il precedente `range`
       if (
         prevRange?.from?.getTime() === selectedRange?.from?.getTime() &&
         prevRange?.to === undefined &&
@@ -39,8 +37,8 @@ function DateSelector({ settings, cabin, bookedDates }) {
       }
 
       return {
-        ...prevRange, // Mantieni i valori esistenti
-        ...selectedRange, // Aggiorna solo i valori definiti
+        ...prevRange,
+        ...selectedRange,
       };
     });
   };
@@ -59,7 +57,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        onSelect={handleSelect} // Usa la nuova funzione `handleSelect`
+        onSelect={handleSelect}
         selected={displayRange}
         disabled={(curDate) =>
           isPast(curDate) ||

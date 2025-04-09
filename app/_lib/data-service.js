@@ -215,7 +215,7 @@ export async function updateBooking(id, updatedFields) {
 /////////////
 // DELETE
 
-export async function deleteBooking(id) {
+export async function deleteReservation(id) {
   const { data, error } = await supabase.from('bookings').delete().eq('id', id);
 
   if (error) {
