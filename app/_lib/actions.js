@@ -41,3 +41,17 @@ export async function updateGuest(formData) {
 
   revalidatePath('/account/profile');
 }
+
+export async function deleteReservation(bookingId) {
+  const session = await auth();
+  if (!session) throw new Error('You must be logged in to delete reservations');
+
+  const { error } = await supabase
+    .from('bookings')
+    .delete()
+    .eq('id', bookingId);
+
+  if (error) throw new Error('Reservation could not be deleted');
+
+  revalidatePath('/account/reservations');
+}
